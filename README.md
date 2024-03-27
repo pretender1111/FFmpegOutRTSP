@@ -5,7 +5,7 @@
 
 # 项目结构
 
-Unity项目位于分支master中。FFmpegOut插件路径为\Assets\FFmpegOut；RTSP服务器路径为\Assets\RTSPServer。此外，ffmpeg.exe程序位于\Assets\StreamingAssets\FFmpegOut\Windows。
+FFmpegOut插件路径为\Assets\FFmpegOut；RTSP服务器路径为\Assets\RTSPServer。此外，ffmpeg.exe程序位于\Assets\StreamingAssets\FFmpegOut\Windows。
 
 # 使用示例
 
