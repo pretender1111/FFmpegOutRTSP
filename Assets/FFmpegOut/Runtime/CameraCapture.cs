@@ -30,7 +30,7 @@ namespace FFmpegOut
             set { _height = value; }
         }
 
-        //Ñ¡Ôñ±àÂëÆ÷
+        //é€‰æ‹©ç¼–ç å™¨
         [SerializeField] FFmpegPreset _preset;
 
         public FFmpegPreset preset {
@@ -65,13 +65,13 @@ namespace FFmpegOut
         bool isServerAccesible = false;
         string ipv4Address;
 
-        //»ñÈ¡ÉãÏñ»úµÄÄ¿±êäÖÈ¾ÎÆÀí¸ñÊ½
+        //è·å–æ‘„åƒæœºçš„ç›®æ ‡æ¸²æŸ“çº¹ç†æ ¼å¼
         RenderTextureFormat GetTargetFormat(Camera camera)
         {
             return camera.allowHDR ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default;
         }
 
-        //»ñÈ¡ÉãÏñ»úµÄ¿¹¾â³İ¼¶±ğ
+        //è·å–æ‘„åƒæœºçš„æŠ—é”¯é½¿çº§åˆ«
         int GetAntiAliasingLevel(Camera camera)
         {
             return camera.allowMSAA ? QualitySettings.antiAliasing : 1;
@@ -135,7 +135,7 @@ namespace FFmpegOut
                 _blitter = null;
             }
 
-            loader.Kill("rtsp-simple-server");//¹Ø±Õ³ÌĞòÊ±É±ËÀprocess
+            loader.Kill("rtsp-simple-server");//å…³é—­ç¨‹åºæ—¶æ€æ­»process
         }
 
         IEnumerator Start()
@@ -147,21 +147,22 @@ namespace FFmpegOut
                 StartCoroutine(loader.WaitForServerToStart());
             }
 
-            //»ñÈ¡µçÄÔip£¬×öÒ»¸ö¼òµ¥µÄÍÆÁ÷µØÖ·¼ì²é£¬·ÀÖ¹Êä´íµØÖ·³ÌĞò±ÀÀ£
-            // »ñÈ¡¼ÆËã»úµÄËùÓĞÍøÂç½Ó¿Ú
+            //è·å–ç”µè„‘ipï¼Œåšä¸€ä¸ªç®€å•çš„æ¨æµåœ°å€æ£€æŸ¥ï¼Œé˜²æ­¢è¾“é”™åœ°å€ç¨‹åºå´©æºƒ
+            // è·å–è®¡ç®—æœºçš„æ‰€æœ‰ç½‘ç»œæ¥å£
             NetworkInterface[] interfaces = NetworkInterface.GetAllNetworkInterfaces();
-            // ±éÀúÃ¿¸ö½Ó¿Ú
+            // éå†æ¯ä¸ªæ¥å£
             foreach (NetworkInterface iface in interfaces)
             {
-                // Èç¹ûÕÒµ½WiFi»òÒÔÌ«Íø½Ó¿Ú£¬²¢ÇÒ¸Ã½Ó¿Ú´¦ÓÚ»î¶¯×´Ì¬
+                // å¦‚æœæ‰¾åˆ°WiFiæˆ–ä»¥å¤ªç½‘æ¥å£ï¼Œå¹¶ä¸”è¯¥æ¥å£å¤„äºæ´»åŠ¨çŠ¶æ€
                 if (iface.OperationalStatus == OperationalStatus.Up 
                     && (iface.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || iface.NetworkInterfaceType == NetworkInterfaceType.Ethernet))
                 {
-                    // ±éÀú¸Ã½Ó¿ÚÉÏµÄËùÓĞ IP µØÖ·
+                    // éå†è¯¥æ¥å£ä¸Šçš„æ‰€æœ‰ IP åœ°å€
                     foreach (UnicastIPAddressInformation addr in iface.GetIPProperties().UnicastAddresses)
                     {
-                        // Èç¹ûÕÒµ½ IPv4 µØÖ·£¬Êä³ö²¢½áÊø
-                        if (addr.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                        // å¦‚æœæ‰¾åˆ° IPv4 åœ°å€ï¼Œè¾“å‡ºå¹¶ç»“æŸ
+                        if (addr.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork
+                            && addressInfo.Address.ToString().StartsWith("192.168"))
                         {
                             Debug.Log("IPv4 Address: " + addr.Address.ToString());
                             ipv4Address = addr.Address.ToString();
@@ -170,7 +171,7 @@ namespace FFmpegOut
                     }
                 }
             }
-            //ÅĞ¶ÏÊäÈëµÄrtspÊÇ·ñ°üº¬¸Ãip
+            //åˆ¤æ–­è¾“å…¥çš„rtspæ˜¯å¦åŒ…å«è¯¥ip
             if(url.Contains(ipv4Address))
             {
                 isServerAccesible = true;
@@ -192,7 +193,7 @@ namespace FFmpegOut
         {
             var camera = GetComponent<Camera>();
 
-            // Lazy initialization ÀÁ¶è³õÊ¼»¯
+            // Lazy initialization æ‡’æƒ°åˆå§‹åŒ–
             if (_session == null && loader.RTSPServerloaded && isServerAccesible)
             {
                 // Give a newly created temporary render texture to the camera
