@@ -162,7 +162,7 @@ namespace FFmpegOut
                     {
                         // 如果找到 IPv4 地址，输出并结束
                         if (addr.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork
-                            && addressInfo.Address.ToString().StartsWith("192.168"))
+                            && addr.Address.ToString().StartsWith("192.168"))
                         {
                             Debug.Log("IPv4 Address: " + addr.Address.ToString());
                             ipv4Address = addr.Address.ToString();
