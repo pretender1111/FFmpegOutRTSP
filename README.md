@@ -1,7 +1,7 @@
 # FFmpegOutRTSP
 # 项目简介
 
-在Unity中，使用FFmpegOut插件，对Unity中摄像机画面进行捕捉，并通过RTSP进行推流。项目中包含RTSP服务器“rtsp-simple-server.exe”，以当前电脑活跃的ip接口作为推流地址，端口号默认为8554，因此可在项目中输入自己电脑的ip实现推流功能。
+在FFmpegOut插件的基础上，修改FFmpeg指令，使其能够推流摄像机捕捉的画面。同时，项目中集成了一个RTSP服务器“rtsp-simple-server.exe”，能够将当前电脑作为服务器端，推流地址为当前电脑的ip，端口号默认为8554。
 
 # 项目结构
 
